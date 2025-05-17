@@ -8,68 +8,27 @@ const About: React.FC = () => {
   const timeline = [
     {
       id: 1,
-      year: '2016',
-      title: 'First Steps',
-      description: 'Started as an automotive enthusiast photographer, capturing friends\' bikes and cars with passion.',
+      year: '2022',
+      title: 'Beginning the Journey',
+      description: 'Started as an automotive enthusiast photographer, capturing friends\' bikes and cars with passion in Dehradun.',
     },
     {
       id: 2,
-      year: '2018',
-      title: 'First Professional Work',
-      description: 'Shot the KTM Duke series for a local dealership, which became the starting point of professional career.',
-    },
-    {
-      id: 3,
-      year: '2019',
-      title: 'Major Brand Collaboration',
-      description: 'First major brand collaboration with Ducati for their new model launch in Dehradun.',
-    },
-    {
-      id: 4,
-      year: '2020',
-      title: 'Expanded Services',
-      description: 'Expanded from photography to include cinematic videography services for automotive clients.',
-    },
-    {
-      id: 5,
-      year: '2021',
-      title: 'National Recognition',
-      description: 'Featured in Auto India magazine for innovative automotive photography techniques.',
-    },
-    {
-      id: 6,
       year: '2023',
-      title: 'Punjikalens Studio',
-      description: 'Established dedicated Punjikalens studio in Dehradun with state-of-the-art equipment.',
-    },
-  ];
-
-  // Skills data
-  const skills = [
-    {
-      id: 1,
-      name: 'Automotive Photography',
-      percentage: 95,
-    },
-    {
-      id: 2,
-      name: 'Cinematic Videography',
-      percentage: 90,
+      title: 'Expanding Skills',
+      description: 'Developed expertise in video editing and graphic design, creating more dynamic automotive content.',
     },
     {
       id: 3,
-      name: 'Lighting Setup',
-      percentage: 85,
+      year: '2024',
+      title: 'Brand Collaborations',
+      description: 'First major brand collaborations, documenting high-octane motorsports events across Uttarakhand.',
     },
     {
       id: 4,
-      name: 'Post-Processing',
-      percentage: 92,
-    },
-    {
-      id: 5,
-      name: 'Aerial Photography',
-      percentage: 80,
+      year: '2025',
+      title: 'Studio Expansion',
+      description: 'Plans to expand Punjikalens studio with advanced equipment and broader service offerings.',
     },
   ];
 
@@ -89,7 +48,7 @@ const About: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            The story behind Dehradun's premium automotive photographer
+            The story behind Sagar Pun, Dehradun's premium automotive photographer
           </motion.p>
         </div>
       </AboutHero>
@@ -105,7 +64,13 @@ const About: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <div className="photographer-image">
-                <img src="/path-to-photographer-image.jpg" alt="Punjikalens Photographer" />
+                <img 
+                  src="assets/images/compressed/punimage/BVP06350.webp" 
+                  alt="Professional automotive photographer from Punjikalens capturing stunning vehicle photography in Dehradun" 
+                  width="600"
+                  height="800"
+                  loading="lazy"
+                />
               </div>
             </motion.div>
             
@@ -118,20 +83,26 @@ const About: React.FC = () => {
             >
               <h2>The Passion Behind the Lens</h2>
               <p>
-                Hello, I'm [Photographer Name], the founder of Punjikalens. My journey as an automotive photographer began with a simple love for machines and a camera in hand.
+                Hello, I'm SAGAR PUN known as punjikalens. My journey as an automotive photographer began with a simple love for machines and a camera in hand.
               </p>
               <p>
                 Based in the scenic mountains of Dehradun, I combine my passion for automotive excellence with technical photography skills to create visual stories that capture the essence of each vehicle.
               </p>
               <p>
-                With over 7 years of experience working with leading automotive brands, I've developed a unique style that emphasizes the power, design, and emotion that these machines evoke.
+                With 3 years of experience working with leading automotive brands, I've developed a unique style that emphasizes the power, design, and emotion that these machines evoke.
               </p>
               <p>
                 What sets Punjikalens apart is our attention to detail, understanding of automotive engineering, and ability to find the perfect setting that complements each vehicle's character.
               </p>
               
               <div className="signature">
-                <img src="/path-to-signature.png" alt="Photographer's Signature" />
+                <img 
+                  src="assets/images/logo/logo.png" 
+                  alt="Punjikalens - Automotive Photographer's Professional Signature" 
+                  width="200"
+                  height="80"
+                  loading="lazy"
+                />
               </div>
             </motion.div>
           </AboutGrid>
@@ -184,7 +155,7 @@ const About: React.FC = () => {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <h2>Our Journey</h2>
+            <h2>My Journey</h2>
             <p>The evolution of Punjikalens through the years</p>
           </SectionHeader>
           
@@ -217,128 +188,109 @@ const About: React.FC = () => {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <h2>Our Expertise</h2>
-            <p>Professional skills that set us apart</p>
+            <h2>Visual Excellence</h2>
+            <p>Where creativity meets technical precision</p>
           </SectionHeader>
           
-          <div className="skills-container">
-            {skills.map((skill, index) => (
-              <motion.div 
-                key={skill.id}
-                className="skill-item"
-                initial={{ opacity: 0, width: 0 }}
-                whileInView={{ opacity: 1, width: '100%' }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-              >
-                <div className="skill-info">
-                  <h3>{skill.name}</h3>
-                  <span>{skill.percentage}%</span>
-                </div>
-                <div className="skill-bar">
-                  <motion.div 
-                    className="skill-progress" 
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.percentage}%` }}
-                    viewport={{ once: false, amount: 0.2 }}
-                    transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
-                    style={{ width: `${skill.percentage}%` }}
-                  ></motion.div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </SkillsSection>
-
-      <EquipmentSection>
-        <div className="container">
-          <SectionHeader
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2>Our Equipment</h2>
-            <p>Professional gear for exceptional results</p>
-          </SectionHeader>
-          
-          <div className="equipment-grid">
+          <ExpertiseGrid>
             <motion.div 
-              className="equipment-item"
-              initial={{ opacity: 0, y: 20 }}
+              className="expertise-card"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ y: -10, boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}
+              whileHover={{ y: -15, boxShadow: '0 15px 30px rgba(226, 194, 84, 0.2)' }}
             >
-              <div className="equipment-icon">📷</div>
-              <h3>Cameras</h3>
-              <ul>
-                <li>Sony Alpha 1</li>
-                <li>Canon EOS R5</li>
-                <li>Nikon Z9</li>
-                <li>Phase One XF IQ4</li>
-              </ul>
+              <div className="expertise-icon">🏎️</div>
+              <h3>Automotive Photography</h3>
+              <div className="expertise-meter">
+                <span className="level expert">Expert</span>
+              </div>
+              <p>Capturing the soul of machines through dynamic compositions and perfect lighting that highlights every curve and detail.</p>
             </motion.div>
-            
+
             <motion.div 
-              className="equipment-item"
-              initial={{ opacity: 0, y: 20 }}
+              className="expertise-card"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ y: -10, boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}
+              whileHover={{ y: -15, boxShadow: '0 15px 30px rgba(226, 194, 84, 0.2)' }}
             >
-              <div className="equipment-icon">🔭</div>
-              <h3>Lenses</h3>
-              <ul>
-                <li>24-70mm f/2.8 GM</li>
-                <li>70-200mm f/2.8 GM</li>
-                <li>16-35mm f/2.8 GM</li>
-                <li>85mm f/1.4 GM</li>
-                <li>35mm f/1.4 GM</li>
-              </ul>
+              <div className="expertise-icon">🎬</div>
+              <h3>Cinematic Videography</h3>
+              <div className="expertise-meter">
+                <span className="level advanced">Advanced</span>
+              </div>
+              <p>Creating immersive visual stories that convey speed, power and emotion through dynamic shooting and editing techniques.</p>
             </motion.div>
-            
+
             <motion.div 
-              className="equipment-item"
-              initial={{ opacity: 0, y: 20 }}
+              className="expertise-card"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ y: -10, boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}
+              whileHover={{ y: -15, boxShadow: '0 15px 30px rgba(226, 194, 84, 0.2)' }}
             >
-              <div className="equipment-icon">💡</div>
-              <h3>Lighting</h3>
-              <ul>
-                <li>Profoto B10X Plus</li>
-                <li>Godox AD600Pro</li>
-                <li>Broncolor Siros L</li>
-                <li>Various Light Modifiers</li>
-              </ul>
+              <div className="expertise-icon">💫</div>
+              <h3>Post-Processing</h3>
+              <div className="expertise-meter">
+                <span className="level expert">Expert</span>
+              </div>
+              <p>Transforming raw footage into stunning visual masterpieces through color grading, retouching, and creative effects.</p>
             </motion.div>
-            
+
             <motion.div 
-              className="equipment-item"
-              initial={{ opacity: 0, y: 20 }}
+              className="expertise-card"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              whileHover={{ y: -10, boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}
+              whileHover={{ y: -15, boxShadow: '0 15px 30px rgba(226, 194, 84, 0.2)' }}
             >
-              <div className="equipment-icon">🚁</div>
-              <h3>Aerial</h3>
-              <ul>
-                <li>DJI Inspire 2</li>
-                <li>DJI Mavic 3 Pro</li>
-                <li>X7 Camera</li>
-                <li>Various ND Filters</li>
-              </ul>
+              <div className="expertise-icon">💡</div>
+              <h3>Lighting Design</h3>
+              <div className="expertise-meter">
+                <span className="level advanced">Advanced</span>
+              </div>
+              <p>Crafting dramatic and evocative moods through expert manipulation of light and shadow to enhance automotive features.</p>
             </motion.div>
-          </div>
+
+            <motion.div 
+              className="expertise-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              whileHover={{ y: -15, boxShadow: '0 15px 30px rgba(226, 194, 84, 0.2)' }}
+            >
+              <div className="expertise-icon">🚁</div>
+              <h3>Aerial Photography</h3>
+              <div className="expertise-meter">
+                <span className="level intermediate">Intermediate</span>
+              </div>
+              <p>Delivering breathtaking perspectives that showcase vehicles in their environment from unique and impossible angles.</p>
+            </motion.div>
+
+            <motion.div 
+              className="expertise-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              whileHover={{ y: -15, boxShadow: '0 15px 30px rgba(226, 194, 84, 0.2)' }}
+            >
+              <div className="expertise-icon">🎨</div>
+              <h3>Creative Direction</h3>
+              <div className="expertise-meter">
+                <span className="level advanced">Advanced</span>
+              </div>
+              <p>Developing compelling visual concepts that tell the unique story of each vehicle, from concept to execution.</p>
+            </motion.div>
+          </ExpertiseGrid>
         </div>
-      </EquipmentSection>
+      </SkillsSection>
 
       <CTASection>
         <div className="container">
@@ -364,7 +316,7 @@ const About: React.FC = () => {
 
 // Styled Components
 const AboutHero = styled.section`
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/path-to-about-hero.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/images/compressed/ducati/automative.webp');
   background-size: cover;
   background-position: center;
   height: 50vh;
@@ -646,84 +598,75 @@ const SectionHeader = styled(motion.div)`
 const SkillsSection = styled.section`
   padding: 6rem 0;
   background-color: var(--color-dark);
-  
-  .skills-container {
-    max-width: 800px;
-    margin: 0 auto;
-    
-    .skill-item {
-      margin-bottom: 2rem;
-      
-      .skill-info {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        
-        h3 {
-          font-size: 1.2rem;
-          font-weight: 500;
-        }
-        
-        span {
-          color: var(--color-primary);
-          font-weight: 600;
-        }
-      }
-      
-      .skill-bar {
-        height: 10px;
-        background-color: var(--color-gray);
-        border-radius: 5px;
-        overflow: hidden;
-        
-        .skill-progress {
-          height: 100%;
-          background: var(--gradient-gold);
-          border-radius: 5px;
-        }
-      }
-    }
-  }
 `;
 
-const EquipmentSection = styled.section`
-  padding: 6rem 0;
-  background-color: var(--color-black);
+const ExpertiseGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
   
-  .equipment-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
+  .expertise-card {
+    background-color: rgba(30, 30, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-md);
+    padding: 2rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
     
-    .equipment-item {
-      background-color: var(--color-dark-gray);
-      border-radius: var(--border-radius-md);
-      padding: 2rem;
-      transition: all 0.3s ease;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-gold);
+    }
+    
+    .expertise-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    
+    p {
+      color: var(--color-light-gray);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 1rem;
+    }
+    
+    .expertise-meter {
+      margin: 0.5rem 0;
       
-      .equipment-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
+      .level {
+        display: inline-block;
+        padding: 0.3rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
       }
       
-      h3 {
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-        color: var(--color-primary);
+      .expert {
+        background: linear-gradient(90deg, #D4AF37 0%, #F9DF74 100%);
+        color: var(--color-black);
       }
       
-      ul {
-        list-style: none;
-        
-        li {
-          margin-bottom: 0.5rem;
-          color: var(--color-light-gray);
-          
-          &:last-child {
-            margin-bottom: 0;
-          }
-        }
+      .advanced {
+        background: linear-gradient(90deg, #C0C0C0 0%, #E8E8E8 100%);
+        color: var(--color-black);
+      }
+      
+      .intermediate {
+        background: linear-gradient(90deg, #CD7F32 0%, #E9BE88 100%);
+        color: var(--color-black);
       }
     }
   }
@@ -731,7 +674,7 @@ const EquipmentSection = styled.section`
 
 const CTASection = styled.section`
   padding: 6rem 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/path-to-cta-bg.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('assets/images/compressed/ducati/DSC08382.webp');
   background-size: cover;
   background-position: center;
   

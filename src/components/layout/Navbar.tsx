@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <LogoImage src="/assets/images/brands/logo.webp" alt="Punjikalens" />
+              <LogoImage src="/assets/images/logo/logo.png" alt="Punjikalens - Premium Automotive Photography" />
             </motion.div>
           </Link>
         </LogoContainer>
@@ -139,7 +139,7 @@ const navLinks = [
   },
   {
     id: 4,
-    text: 'Gallery',
+    text: 'My Work',
     url: '/gallery',
   },
   {

@@ -1,15 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useRef, memo } from 'react';
 import styled from 'styled-components';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
+
+// Performance optimization: Memoize brand item component
+const BrandItem = memo(({ brand }: { brand: { id: number, name: string, logo: string } }) => (
+  <motion.div 
+    key={brand.id} 
+    className="brand-item"
+    whileHover={{ scale: 1.05 }}
+  >
+    <img 
+      src={brand.logo} 
+      alt={brand.name} 
+      loading="lazy"
+      width="120" 
+      height="60" 
+    />
+  </motion.div>
+));
 
 const Home: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -20,67 +36,24 @@ const Home: React.FC = () => {
   });
   
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  const heroYOffset = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const heroYOffset = useTransform(scrollYProgress, [0, 1], [0, 50]);
 
   // Function to scroll to the about section
   const scrollToAbout = () => {
     aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Brands data with local logo paths
+  // Brands data - limit to fewer brands for better performance
   const brands = [
-    { id: 1, name: 'BMW', logo: '/assets/images/brands/bmw logo.webp' },
-    { id: 2, name: 'Audi', logo: '/assets/images/brands/audi.avif' },
-    { id: 3, name: 'Porsche', logo: '/assets/images/brands/porche.png' },
-    { id: 4, name: 'Hero', logo: '/assets/images/brands/Hero_MotoCorp-Logo.wine.png' },
-    { id: 5, name: 'KTM', logo: '/assets/images/brands/ktml.jpg' },
-    { id: 6, name: 'Ducati', logo: '/assets/images/brands/ducati-logo-11563160638f7zwepy3oa.png' },
-    { id: 7, name: 'Triumph', logo: '/assets/images/brands/triump.png' },
-    { id: 8, name: 'Kawasaki', logo: '/assets/images/brands/kawasaki.jpg' },
-    { id: 9, name: 'Alpine Star', logo: '/assets/images/brands/alpinestar.jpg' },
-    { id: 10, name: 'Apex Racing', logo: '/assets/images/brands/apexracing.png' },
-    { id: 11, name: 'Indian Sports Carnival', logo: '/assets/images/brands/indiansportscarnival.jpeg' },
-    { id: 12, name: 'ISBK', logo: '/assets/images/brands/isbk.png' },
-    { id: 13, name: 'Nurifumi', logo: '/assets/images/brands/nurifumi.png' },
-    { id: 14, name: 'Pahadi Racing', logo: '/assets/images/brands/pahadi_racing.webp' },
-    { id: 15, name: 'Race Dynamic India', logo: '/assets/images/brands/racedynamic_india.png' },
-    { id: 16, name: 'Red FM', logo: '/assets/images/brands/redfm.png' },
-    { id: 17, name: 'Sajoba', logo: '/assets/images/brands/sajoba.jpeg' },
-    { id: 18, name: 'Speed Striker', logo: '/assets/images/brands/speedstriker.jpeg' },
-    { id: 19, name: 'TRT Racing', logo: '/assets/images/brands/trtworacing.png' },
-  ];
-
-  // Services data
-  const services = [
-    {
-      id: 1,
-      title: 'Automotive Photography',
-      description: 'High-end automotive photography to showcase your prized vehicles in stunning detail.',
-      icon: '🏎️',
-      image: '/path-to-automotive-photo.jpg',
-    },
-    {
-      id: 2,
-      title: 'Event Coverage',
-      description: 'Professional photography and videography for automotive events, races, and shows.',
-      icon: '🎭',
-      image: '/path-to-event-photo.jpg',
-    },
-    {
-      id: 3,
-      title: 'Commercial Shoots',
-      description: 'Commercial photography services for manufacturers, dealerships, and automotive businesses.',
-      icon: '💼',
-      image: '/path-to-commercial-photo.jpg',
-    },
-    {
-      id: 4,
-      title: 'Cinematic Videos',
-      description: 'Breathtaking cinematic videos that capture the essence and power of your vehicles.',
-      icon: '🎬',
-      image: '/path-to-video-frame.jpg',
-    },
+    { id: 1, name: 'BMW', logo: 'assets/images/brands/bmw logo.webp' },
+    { id: 2, name: 'Audi', logo: 'assets/images/brands/audi.avif' },
+    { id: 3, name: 'Porsche', logo: 'assets/images/brands/porche.png' },
+    { id: 4, name: 'Hero', logo: 'assets/images/brands/Hero_MotoCorp-Logo.wine.png' },
+    { id: 5, name: 'KTM', logo: 'assets/images/brands/ktml.jpg' },
+    { id: 6, name: 'Ducati', logo: 'assets/images/brands/ducati-logo-11563160638f7zwepy3oa.png' },
+    { id: 7, name: 'Triumph', logo: 'assets/images/brands/triump.png' },
+    { id: 8, name: 'Kawasaki', logo: 'assets/images/brands/kawasaki.jpg' },
   ];
 
   return (
@@ -95,17 +68,15 @@ const Home: React.FC = () => {
             y: heroYOffset
           }}
         >
-          <video autoPlay muted loop playsInline>
-            <source src="/path-to-your-video.mp4" type="video/mp4" />
-          </video>
+          <div className="hero-image"></div>
           <div className="overlay"></div>
         </motion.div>
         
         <motion.div 
           className="hero-content"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6 }}
         >
           <h1>Capturing Automotive Excellence</h1>
           <p>Premium automotive photography and videography in Dehradun</p>
@@ -118,7 +89,7 @@ const Home: React.FC = () => {
         <ScrollIndicator 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 0.8 }}
           onClick={scrollToAbout}
         >
           <div className="chevron-container">
@@ -136,10 +107,10 @@ const Home: React.FC = () => {
           <div className="about-content">
             <motion.div 
               className="about-text"
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
             >
               <h2>The Art of Automotive Imagery</h2>
               <p>
@@ -152,111 +123,115 @@ const Home: React.FC = () => {
             </motion.div>
             
             <motion.div 
-              className="about-image"
-              initial={{ opacity: 0, x: 50 }}
+              className="about-images"
+              initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="image-container">
-                <img src="/path-to-your-about-image.jpg" alt="Automotive Photographer at work" />
+              <div className="images-grid">
+                <div className="image-container primary">
+                  <img 
+                    src="assets/images/compressed/bmw/DSC00497.webp" 
+                    alt="BMW automotive photography by Punjikalens" 
+                    loading="lazy"
+                    width="600"
+                    height="400"
+                  />
+                </div>
+                <div className="image-container secondary">
+                  <img 
+                    src="assets/images/compressed/ducati/DSC00928.webp" 
+                    alt="Ducati motorcycle photography by Punjikalens" 
+                    loading="lazy"
+                    width="400"
+                    height="300"
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </AboutSection>
 
-      {/* Services Section */}
-      <ServicesSection>
-        <div className="container">
-          <SectionHeader
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2>Our Services</h2>
-            <p>Professional automotive visual services tailored to your needs</p>
-          </SectionHeader>
-          
-          <div className="services-grid">
-            {services.map((service, index) => (
-              <ServiceCard 
-                key={service.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -10, boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}
-              >
-                <div className="service-image">
-                  <img src={service.image} alt={service.title} />
-                  <div className="service-icon">{service.icon}</div>
-                </div>
-                <div className="service-content">
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                  <Link to="/services" className="learn-more">
-                    Learn More <span>&rarr;</span>
-                  </Link>
-                </div>
-              </ServiceCard>
-            ))}
-          </div>
-          
-          <motion.div 
-            className="text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Button variant="primary" to="/services">View All Services</Button>
-          </motion.div>
-        </div>
-      </ServicesSection>
-
       {/* Featured Work Section */}
       <FeaturedSection>
         <div className="container">
           <SectionHeader
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
           >
             <h2>Featured Work</h2>
             <p>Explore some of our finest automotive captures</p>
           </SectionHeader>
           
           <Swiper
-            modules={[EffectFade, Pagination, Autoplay]}
-            effect="fade"
+            modules={[Pagination, Autoplay]}
             pagination={{ clickable: true }}
             autoplay={{ delay: 5000, disableOnInteraction: false }}
             loop={true}
             className="featured-slider"
           >
-            {[1, 2, 3, 4].map((item) => (
-              <SwiperSlide key={item}>
-                <div className="slide-content">
-                  <div className="slide-image">
-                    <img src={`/path-to-featured-${item}.jpg`} alt={`Featured work ${item}`} />
-                  </div>
-                  <div className="slide-info">
-                    <h3>Project Title {item}</h3>
-                    <p>Short description of this featured automotive photography project.</p>
-                  </div>
+            <SwiperSlide>
+              <div className="slide-content">
+                <div className="slide-image">
+                  <img 
+                    src="assets/images/compressed/ducati/DSC08382.webp" 
+                    alt="Ducati motorcycle photography by Punjikalens"
+                    loading="lazy" 
+                    width="800"
+                    height="600"
+                  />
                 </div>
-              </SwiperSlide>
-            ))}
+                <div className="slide-info">
+                  <h3>Trackside Assembly</h3>
+                  <p>Riders gear up, moments before the action begins. Captured by PunjikaLens..</p>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="slide-content">
+                <div className="slide-image">
+                  <img 
+                    src="assets/images/compressed/ducati/DSC05282.webp" 
+                    alt="Ducati motorcycle detail photography by Punjikalens"
+                    loading="lazy" 
+                    width="800"
+                    height="600"
+                  />
+                </div>
+                <div className="slide-info">
+                  <h3>Full Throttlee</h3>
+                  <p>A rider blitzes down the track in perfect form. Shot by PunjikaLens.</p>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="slide-content">
+                <div className="slide-image">
+                  <img 
+                    src="assets/images/compressed/ducati/DSC00481.webp" 
+                    alt="Ducati action photography by Punjikalens"
+                    loading="lazy" 
+                    width="800"
+                    height="600"
+                  />
+                </div>
+                <div className="slide-info">
+                  <h3>Precision in Motion</h3>
+                  <p>A high-speed capture of a superbike rider carving through the track with perfect control and lean. Shot by PunjikaLens.</p>
+                </div>
+              </div>
+            </SwiperSlide>
           </Swiper>
           
           <motion.div 
             className="text-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: false, amount: 0.1 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ delay: 0.2 }}
           >
             <Button variant="primary" to="/gallery">View Full Gallery</Button>
@@ -264,14 +239,14 @@ const Home: React.FC = () => {
         </div>
       </FeaturedSection>
 
-      {/* Brands Section */}
+      {/* Brands Section - Optimized */}
       <BrandsSection>
         <div className="container">
           <SectionHeader
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
           >
             <h2>Brands We've Worked With</h2>
             <p>Trusted by leading automotive brands</p>
@@ -280,94 +255,26 @@ const Home: React.FC = () => {
           <div className="brands-slider">
             <div className="slider-track">
               {brands.map(brand => (
-                <motion.div 
-                  key={brand.id} 
-                  className="brand-item"
-                  whileHover={{ scale: 1.1, y: -5 }}
-                >
-                  <img src={brand.logo} alt={brand.name} />
-                </motion.div>
+                <BrandItem key={brand.id} brand={brand} />
               ))}
-              {/* Duplicate for infinite loop effect */}
-              {brands.map(brand => (
-                <motion.div 
-                  key={`duplicate-${brand.id}`} 
-                  className="brand-item"
-                  whileHover={{ scale: 1.1, y: -5 }}
-                >
-                  <img src={brand.logo} alt={brand.name} />
-                </motion.div>
+              {/* Limit duplicates for better performance */}
+              {brands.slice(0, 8).map(brand => (
+                <BrandItem key={`duplicate-${brand.id}`} brand={brand} />
               ))}
             </div>
           </div>
         </div>
       </BrandsSection>
       
-      {/* Testimonials Section */}
-      <TestimonialsSection>
-        <div className="container">
-          <SectionHeader
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2>Client Testimonials</h2>
-            <p>What our clients say about our work</p>
-          </SectionHeader>
-          
-          <Swiper
-            modules={[Pagination, Autoplay]}
-            pagination={{ clickable: true }}
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
-            loop={true}
-            slidesPerView={1}
-            spaceBetween={30}
-            breakpoints={{
-              640: {
-                slidesPerView: 1,
-              },
-              768: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-            }}
-            className="testimonials-slider"
-          >
-            {[1, 2, 3, 4, 5].map((item) => (
-              <SwiperSlide key={item}>
-                <TestimonialCard>
-                  <div className="quote-icon">❝</div>
-                  <p className="testimonial-text">
-                    "The photography service provided by Punjikalens was exceptional. They captured my car in ways I never imagined possible, highlighting every curve and detail perfectly."
-                  </p>
-                  <div className="testimonial-author">
-                    <div className="author-image">
-                      <img src={`/path-to-client-${item}.jpg`} alt={`Client ${item}`} />
-                    </div>
-                    <div className="author-info">
-                      <h4>Client Name</h4>
-                      <p>Superbike Owner</p>
-                    </div>
-                  </div>
-                </TestimonialCard>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </TestimonialsSection>
-      
       {/* CTA Section */}
       <CTASection>
         <div className="container">
           <motion.div 
             className="cta-content"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5 }}
           >
             <h2>Ready to Showcase Your Automotive Beauty?</h2>
             <p>Let's create stunning visual content for your prized machines.</p>
@@ -379,7 +286,7 @@ const Home: React.FC = () => {
   );
 };
 
-// Styled Components
+// Styled Components - Optimized
 const HeroSection = styled.section`
   height: 100vh;
   width: 100%;
@@ -397,11 +304,14 @@ const HeroSection = styled.section`
     width: 100%;
     height: 100%;
     z-index: -1;
+    will-change: transform, opacity;
     
-    video {
+    .hero-image {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      background-image: url('assets/images/compressed/nature/DSC05693.webp');
+      background-size: cover;
+      background-position: center;
     }
     
     .overlay {
@@ -483,16 +393,20 @@ const ScrollIndicator = styled(motion.div)`
   }
   
   @keyframes move-chevron {
-    0% {
-      opacity: 0;
-      transform: rotate(45deg) translate(-10px, -10px);
-    }
-    50% {
+    25% {
       opacity: 1;
+    }
+    33% {
+      opacity: 1;
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    67% {
+      opacity: 1;
+      transform: rotate(45deg) translate(10px, 10px);
     }
     100% {
       opacity: 0;
-      transform: rotate(45deg) translate(10px, 10px);
+      transform: rotate(45deg) translate(15px, 15px);
     }
   }
   
@@ -525,7 +439,7 @@ const AboutSection = styled.section`
     align-items: center;
     gap: 3rem;
     
-    .about-text, .about-image {
+    .about-text, .about-images {
       flex: 1;
       min-width: 300px;
     }
@@ -545,23 +459,83 @@ const AboutSection = styled.section`
       }
     }
     
-    .about-image {
-      .image-container {
-        border-radius: var(--border-radius-md);
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
-        transform: rotate(2deg);
-        border: 5px solid var(--color-white);
+    .about-images {
+      .images-grid {
+        position: relative;
+        height: 450px;
         
-        img {
-          width: 100%;
-          height: auto;
-          display: block;
-          transition: transform 0.5s ease;
+        .image-container {
+          border-radius: var(--border-radius-md);
+          overflow: hidden;
+          box-shadow: var(--shadow-lg);
+          transition: all 0.3s ease;
+          position: absolute;
+          
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+          }
           
           &:hover {
-            transform: scale(1.05);
+            z-index: 2;
+            img {
+              transform: scale(1.03);
+            }
           }
+          
+          &.primary {
+            width: 75%;
+            height: 350px;
+            top: 0;
+            right: 0;
+            z-index: 1;
+            border: 5px solid var(--color-white);
+            transform: rotate(2deg);
+          }
+          
+          &.secondary {
+            width: 60%;
+            height: 250px;
+            left: 0;
+            bottom: 0;
+            border: 5px solid var(--color-primary);
+            transform: rotate(-3deg);
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .about-content {
+      .about-images {
+        .images-grid {
+          height: 400px;
+          
+          .image-container {
+            &.primary {
+              width: 70%;
+            }
+            
+            &.secondary {
+              width: 55%;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .about-content {
+      .about-images {
+        margin-top: 2rem;
+        
+        .images-grid {
+          height: 350px;
         }
       }
     }
@@ -580,98 +554,6 @@ const SectionHeader = styled(motion.div)`
   p {
     color: var(--color-light-gray);
     font-size: 1.1rem;
-  }
-`;
-
-const ServicesSection = styled.section`
-  padding: 6rem 0;
-  background-color: var(--color-black);
-  
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-  
-  .text-center {
-    text-align: center;
-    margin-top: 2rem;
-  }
-`;
-
-const ServiceCard = styled(motion.div)`
-  background-color: var(--color-dark-gray);
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  .service-image {
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    
-    .service-icon {
-      position: absolute;
-      bottom: -20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: var(--gradient-gold);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.5rem;
-      box-shadow: var(--shadow-md);
-    }
-  }
-  
-  .service-content {
-    padding: 1.5rem;
-    
-    h3 {
-      margin-bottom: 1rem;
-    }
-    
-    p {
-      color: var(--color-light-gray);
-      margin-bottom: 1.5rem;
-    }
-    
-    .learn-more {
-      display: inline-flex;
-      align-items: center;
-      color: var(--color-primary);
-      font-weight: 500;
-      transition: gap 0.3s ease;
-      gap: 0.5rem;
-      
-      span {
-        transition: transform 0.3s ease;
-      }
-      
-      &:hover {
-        gap: 0.7rem;
-        
-        span {
-          transform: translateX(3px);
-        }
-      }
-    }
-  }
-  
-  &:hover {
-    .service-image img {
-      transform: scale(1.1);
-    }
   }
 `;
 
@@ -697,8 +579,8 @@ const FeaturedSection = styled.section`
     
     .slide-content {
       position: relative;
-      height: 70vh;
-      max-height: 600px;
+      height: 60vh;
+      max-height: 500px;
       
       .slide-image {
         width: 100%;
@@ -749,8 +631,9 @@ const BrandsSection = styled.section`
     
     .slider-track {
       display: flex;
-      animation: scroll 40s linear infinite;
+      animation: scroll 60s linear infinite;
       width: fit-content;
+      will-change: transform;
       
       @keyframes scroll {
         0% {
@@ -774,7 +657,7 @@ const BrandsSection = styled.section`
       background-color: transparent;
       border: none;
       border-radius: var(--border-radius-sm);
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease;
       position: relative;
       text-align: center;
       
@@ -785,22 +668,13 @@ const BrandsSection = styled.section`
         transition: all 0.3s ease;
         object-fit: contain;
       }
-      
-      &:hover {
-        transform: translateY(-5px) scale(1.05);
-        
-        img {
-          filter: brightness(1.3);
-          transform: scale(1.05);
-        }
-      }
     }
   }
   
   @media (max-width: 768px) {
     .brands-slider {
       .slider-track {
-        animation: scroll 30s linear infinite;
+        animation: scroll 40s linear infinite;
       }
       
       .brand-item {
@@ -816,92 +690,11 @@ const BrandsSection = styled.section`
   }
 `;
 
-const TestimonialsSection = styled.section`
-  padding: 6rem 0;
-  background-color: var(--color-dark);
-  
-  .testimonials-slider {
-    padding-bottom: 3rem;
-    
-    .swiper-pagination-bullet {
-      background-color: var(--color-white);
-      opacity: 0.5;
-      
-      &-active {
-        background-color: var(--color-primary);
-        opacity: 1;
-      }
-    }
-  }
-`;
-
-const TestimonialCard = styled.div`
-  background-color: var(--color-dark-gray);
-  border-radius: var(--border-radius-md);
-  padding: 2rem;
-  height: 100%;
-  min-height: 300px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  
-  .quote-icon {
-    font-size: 4rem;
-    line-height: 1;
-    color: var(--color-primary);
-    opacity: 0.2;
-    position: absolute;
-    top: 10px;
-    left: 20px;
-  }
-  
-  .testimonial-text {
-    flex: 1;
-    font-style: italic;
-    color: var(--color-light-gray);
-    position: relative;
-    z-index: 1;
-    margin-bottom: 1.5rem;
-  }
-  
-  .testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    
-    .author-image {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      overflow: hidden;
-      
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    
-    .author-info {
-      h4 {
-        font-size: 1rem;
-        margin-bottom: 0;
-      }
-      
-      p {
-        font-size: 0.9rem;
-        color: var(--color-light-gray);
-      }
-    }
-  }
-`;
-
 const CTASection = styled.section`
   padding: 6rem 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('/path-to-cta-bg.jpg');
+  background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('assets/images/compressed/ducati/automative.webp');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   
   .cta-content {
     max-width: 800px;
@@ -921,4 +714,4 @@ const CTASection = styled.section`
   }
 `;
 
-export default Home; 
+export default React.memo(Home); 

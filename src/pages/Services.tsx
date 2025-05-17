@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Button from '../components/ui/Button';
+import { CameraIcon, VideoIcon, EventIcon, WeddingIcon } from '../assets/icons';
 
 interface ServicePackage {
   id: number;
@@ -15,7 +16,7 @@ interface ServiceType {
   id: number;
   title: string;
   description: string;
-  icon: string;
+  icon: React.ReactNode;
   image: string;
   packages: ServicePackage[];
 }
@@ -27,8 +28,8 @@ const Services: React.FC = () => {
       id: 1,
       title: 'Automotive Photography',
       description: 'Professional photography services for cars, motorcycles, and other vehicles, capturing their beauty, design, and character.',
-      icon: '📷',
-      image: '/path-to-photography-service.jpg',
+      icon: <CameraIcon size={28} color="var(--color-primary)" />,
+      image: 'assets/images/compressed/ducati/automative.webp',
       packages: [
         {
           id: 101,
@@ -79,9 +80,9 @@ const Services: React.FC = () => {
     {
       id: 2,
       title: 'Cinematic Videography',
-      description: 'Stunning cinematic videos that highlight the beauty, power, and sound of your vehicle, perfect for personal or commercial use.',
-      icon: '🎬',
-      image: '/path-to-videography-service.jpg',
+      description: 'Breathtaking cinematic videos capturing the majesty of landscapes, nature, and scenic destinations with professional quality and artistic vision.',
+      icon: <VideoIcon size={28} color="var(--color-primary)" />,
+      image: 'assets/images/compressed/nature/IMG_1528.webp',
       packages: [
         {
           id: 201,
@@ -135,9 +136,9 @@ const Services: React.FC = () => {
     {
       id: 3,
       title: 'Event Coverage',
-      description: 'Comprehensive photo and video coverage for automotive events, races, launches, and meets to capture all the action and excitement.',
-      icon: '🎭',
-      image: '/path-to-event-service.jpg',
+      description: 'Professional photo and video coverage for concerts, music festivals, live performances, and entertainment events to capture all the energy and memorable moments.',
+      icon: <EventIcon size={28} color="var(--color-primary)" />,
+      image: 'assets/images/compressed/red fm/BVP08727.webp',
       packages: [
         {
           id: 301,
@@ -188,10 +189,10 @@ const Services: React.FC = () => {
     },
     {
       id: 4,
-      title: 'Commercial Photography',
-      description: 'High-end commercial photography services for dealerships, manufacturers, and automotive businesses to showcase products effectively.',
-      icon: '💼',
-      image: '/path-to-commercial-service.jpg',
+      title: 'Wedding Photography',
+      description: 'Elegant and timeless wedding photography to capture your special moments with artistic vision and meticulous attention to detail.',
+      icon: <WeddingIcon size={28} color="var(--color-primary)" />,
+      image: 'assets/images/compressed/wedding/weddding.webp',
       packages: [
         {
           id: 401,
@@ -267,30 +268,6 @@ const Services: React.FC = () => {
           </motion.p>
         </div>
       </ServicesHero>
-
-      <ServicesIntro>
-        <div className="container">
-          <motion.div 
-            className="intro-content"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2>Capturing Automotive Excellence</h2>
-            <p>
-              At Punjikalens, we offer a range of specialized photography and videography services designed 
-              to showcase your automotive beauty in stunning detail. From individual vehicle shoots to 
-              comprehensive event coverage, our services are tailored to meet your specific needs and vision.
-            </p>
-            <p>
-              Each service includes professional editing, high-resolution deliverables, and the expertise of 
-              our automotive visual specialists who understand the unique characteristics and highlights of 
-              different vehicles.
-            </p>
-          </motion.div>
-        </div>
-      </ServicesIntro>
 
       <ServicesTabs>
         <div className="container">
@@ -542,7 +519,7 @@ const Services: React.FC = () => {
 
 // Styled Components
 const ServicesHero = styled.section`
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/path-to-services-hero.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/images/compressed/ducati/automative.webp');
   background-size: cover;
   background-position: center;
   height: 50vh;
@@ -563,32 +540,6 @@ const ServicesHero = styled.section`
   }
 `;
 
-const ServicesIntro = styled.section`
-  padding: 5rem 0;
-  background-color: var(--color-black);
-  
-  .intro-content {
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-    
-    h2 {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      margin-bottom: 1.5rem;
-    }
-    
-    p {
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      color: var(--color-light-gray);
-      
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-`;
-
 const ServicesTabs = styled.section`
   padding: 5rem 0;
   background-color: var(--color-dark);
@@ -603,7 +554,7 @@ const ServicesTabs = styled.section`
     .tab-button {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
       padding: 0.75rem 1.5rem;
       background-color: var(--color-dark-gray);
       border: none;
@@ -616,7 +567,11 @@ const ServicesTabs = styled.section`
       transition: all 0.3s ease;
       
       .icon {
-        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
       }
       
       &:hover {
@@ -626,6 +581,10 @@ const ServicesTabs = styled.section`
       &.active {
         background-color: var(--color-primary);
         color: var(--color-black);
+        
+        .icon svg {
+          stroke: var(--color-black);
+        }
       }
     }
   }
@@ -853,7 +812,7 @@ const FAQSection = styled.section`
 
 const CTASection = styled.section`
   padding: 6rem 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/path-to-cta-bg.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/images/compressed/red fm/BVP08727.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
